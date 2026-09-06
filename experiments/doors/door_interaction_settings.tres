@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="DoorInteractionSettings" format=3 uid="uid://c0ha2q7vr8l7b"]
+
+[ext_resource type="Script" uid="uid://byj3vc0de713p" path="res://experiments/doors/door_interaction_settings.gd" id="1"]
+
+[resource]
+script = ExtResource("1")

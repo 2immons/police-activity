@@ -1,0 +1,38 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://npc/ai/ai_controller.gd" id="1"]
+[ext_resource type="Script" path="res://npc/ai/perception_controller.gd" id="3"]
+[ext_resource type="Script" path="res://npc/ai/tactical_movement_controller.gd" id="6"]
+[ext_resource type="Script" path="res://npc/ai/aim_controller.gd" id="8"]
+[ext_resource type="Script" path="res://npc/ai/npc_weapon_controller.gd" id="9"]
+[ext_resource type="Script" path="res://npc/ai/suspect_knowledge.gd" id="10"]
+[ext_resource type="Script" path="res://npc/ai/suspect_tactical_query.gd" id="12"]
+[ext_resource type="Script" path="res://npc/ai/suspect_animation.gd" id="13"]
+
+[node name="AIController" type="Node" node_paths=PackedStringArray("perception", "movement", "aim", "weapon", "knowledge", "tactical_query", "animation", "debug_label")]
+script = ExtResource("1")
+perception = NodePath("SuspectPerception")
+movement = NodePath("SuspectMovement")
+aim = NodePath("AimController")
+weapon = NodePath("SuspectWeapon")
+knowledge = NodePath("SuspectKnowledge")
+tactical_query = NodePath("SuspectTacticalQuery")
+animation = NodePath("SuspectAnimation")
+debug_label = NodePath("../AIDebugLabel")
+
+[node name="SuspectKnowledge" type="Node" parent="."]
+script = ExtResource("10")
+[node name="SuspectTacticalQuery" type="Node" parent="."]
+script = ExtResource("12")
+[node name="SuspectPerception" type="Node" parent="." node_paths=PackedStringArray("eye_origin")]
+script = ExtResource("3")
+eye_origin = NodePath("../../Sensors/EyeOrigin")
+[node name="SuspectMovement" type="Node" parent="." node_paths=PackedStringArray("navigation_agent")]
+script = ExtResource("6")
+navigation_agent = NodePath("../../NavigationAgent3D")
+[node name="AimController" type="Node" parent="."]
+script = ExtResource("8")
+[node name="SuspectWeapon" type="Node" parent="."]
+script = ExtResource("9")
+[node name="SuspectAnimation" type="Node" parent="."]
+script = ExtResource("13")

@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7sox0u4y08h8"]
+
+[ext_resource type="PackedScene" path="res://experiments/player/prefabs/glock_model.tscn" id="1"]
+
+[ext_resource type="AudioStream" uid="uid://bqxvhaiw4l60h" path="res://experiments/weapon_system/sounds/glock17_shot.mp3" id="2_audio"]
+[sub_resource type="StandardMaterial3D" id="FlashMat"]
+shading_mode = 0
+albedo_color = Color(1, 0.78, 0.3, 1)
+[sub_resource type="SphereMesh" id="FlashMesh"]
+material = SubResource("FlashMat")
+radius = 0.017
+height = 0.055
+[node name="Glock17" type="Node3D"]
+
+[node name="Model" parent="." instance=ExtResource("1")]
+
+[node name="GripRight" type="Marker3D" parent="."]
+transform = Transform3D(0.081083134, -0.0067480514, -0.99668455, 0.99579173, -0.042316232, 0.08129718, -0.042724118, -0.9990809, 0.0032884548, 0.028, -0.016, 0.1267117)
+
+[node name="GripLeft" type="Marker3D" parent="."]
+transform = Transform3D(0.99900174, 0.04267773, -0.01322265, 0.013069987, 0.0038502216, 0.9999069, 0.04272461, -0.99908173, 0.0032885969, -0.047, -0.039, 0.1247117)
+
+[node name="Muzzle" type="Marker3D" parent="."]
+position = Vector3(0, 0.037, -0.135)
+
+[node name="Sight" type="Marker3D" parent="."]
+position = Vector3(0, 0.0505, 0.025)
+
+[node name="Flashlight" type="SpotLight3D" parent="."]
+position = Vector3(0, -0.012, -0.14)
+visible = false
+light_color = Color(0.93, 0.96, 1, 1)
+light_energy = 8.0
+light_size = 0.012
+shadow_enabled = true
+shadow_bias = 0.015
+shadow_normal_bias = 0.1
+spot_range = 25.0
+spot_angle = 24.0
+spot_angle_attenuation = 1.4
+
+[node name="MagazineGrip" type="Marker3D" parent="."]
+position = Vector3(-0.047, -0.09, 0.125)
+
+
+
+[node name="Flash" type="Node3D" parent="Muzzle"]
+visible = false
+[node name="Mesh" type="MeshInstance3D" parent="Muzzle/Flash"]
+position = Vector3(0, 0, -0.025)
+rotation = Vector3(1.5707963, 0, 0)
+mesh = SubResource("FlashMesh")
+cast_shadow = 0
+[node name="Light" type="OmniLight3D" parent="Muzzle/Flash"]
+light_color = Color(1, 0.65, 0.25, 1)
+light_energy = 2.0
+omni_range = 2.0
+[node name="ShotAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_audio")
+volume_db = -8.0
+max_distance = 60.0
+max_polyphony = 4

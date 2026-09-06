@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="BodyEnvironmentInteractionSettings" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://experiments/player/environment_interaction/body_environment_interaction_settings.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+prediction_time = 0.4
+minimum_lookahead = 0.8
+maximum_lookahead = 2.5
+trajectory_fan_degrees = 18.0
+max_torso_yaw_degrees = 24.0
+torso_side_offset = 0.075
+shoulder_activation_distance = 0.82
+shoulder_full_effect_distance = 0.42
+squeeze_turn_in_speed_degrees = 95.0
+squeeze_return_speed_degrees = 110.0
+minimum_movement_speed = 0.12
+ads_disable_amount = 0.85
+side_arm_straightening = 1.0
+side_arm_outset = 0.15
+side_pose_blend_in = 0.28
+side_pose_blend_out = 0.32
+reflex_activation_distance = 1.0
+reflex_full_distance = 0.5
+reflex_minimum_speed = 3.0
+reflex_full_speed = 5.5
+reflex_reaction_speed = 9.0
+reflex_return_speed = 6.0
+reflex_front_normal_dot = 0.45
+reflex_arm_reach = 0.82
+reflex_hand_drop = 0.34
+reflex_hand_outset = 0.14
+reflex_animation_blend = 0.18
+reflex_push_pose = 0.63
+impact_minimum_speed = 3.0
+impact_decay_speed = 6.0
+impact_arm_impulse = 0.32
+impact_chest_offset = 0.065

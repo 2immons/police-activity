@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PhysicalDoorSettings" format=3]
+
+[ext_resource type="Script" path="res://experiments/doors/door_settings.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+mass = 32.0
+resistance = 6.2
+auto_stiffness = 7.0
+controlled_stiffness = 9.0
+damping = 6.5
+max_angular_speed = 3.0
+max_motor_impulse = 38.0

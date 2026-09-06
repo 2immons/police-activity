@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BulletPenetrationSettings" format=3]
+
+[ext_resource type="Script" path="res://experiments/weapon_system/ballistics/penetration_settings.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+allowed_calibers = PackedStringArray("9x19mm")
+penetration_cost = 0.22

@@ -1,0 +1,333 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://doy71yvcxlllv"]
+
+[ext_resource type="Script" uid="uid://bo1wd4j3rxv1s" path="res://ai/tasks/bt_move_to_blackboard_position.gd" id="2_move"]
+[ext_resource type="Script" uid="uid://dh12o4bsci4ka" path="res://ai/tasks/bt_select_fire_move_destination.gd" id="3_select_fire"]
+[ext_resource type="Script" uid="uid://bl2hkbfrkvmu" path="res://ai/tasks/bt_maintain_threat_facing.gd" id="4_face"]
+[ext_resource type="Script" uid="uid://c6q7vhvkiueee" path="res://ai/tasks/bt_fire_when_valid.gd" id="5_fire"]
+[ext_resource type="Script" uid="uid://cryfo3onj46dw" path="res://ai/tasks/bt_stop_movement.gd" id="6_stop"]
+[ext_resource type="Script" uid="uid://dkhmhf1knrcgr" path="res://ai/tasks/bt_maintain_pose.gd" id="7_pose"]
+[ext_resource type="Script" uid="uid://b6f1vncb0s3o4" path="res://ai/tasks/bt_force_mind_reevaluation.gd" id="8_reevaluate"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan"]
+var/target/name = &"target"
+var/target/type = 24
+var/target/hint = 0
+var/target/hint_string = ""
+var/can_see_target/name = &"can_see_target"
+var/can_see_target/type = 1
+var/can_see_target/value = false
+var/can_see_target/hint = 0
+var/can_see_target/hint_string = ""
+var/target_visible_fraction/name = &"target_visible_fraction"
+var/target_visible_fraction/type = 3
+var/target_visible_fraction/value = 0.0
+var/target_visible_fraction/hint = 0
+var/target_visible_fraction/hint_string = ""
+var/current_target_position/name = &"current_target_position"
+var/current_target_position/type = 9
+var/current_target_position/value = Vector3(0, 0, 0)
+var/current_target_position/hint = 0
+var/current_target_position/hint_string = ""
+var/last_seen_position/name = &"last_seen_position"
+var/last_seen_position/type = 9
+var/last_seen_position/value = Vector3(0, 0, 0)
+var/last_seen_position/hint = 0
+var/last_seen_position/hint_string = ""
+var/last_heard_position/name = &"last_heard_position"
+var/last_heard_position/type = 9
+var/last_heard_position/value = Vector3(0, 0, 0)
+var/last_heard_position/hint = 0
+var/last_heard_position/hint_string = ""
+var/time_since_target_seen/name = &"time_since_target_seen"
+var/time_since_target_seen/type = 3
+var/time_since_target_seen/value = 1e+20
+var/time_since_target_seen/hint = 0
+var/time_since_target_seen/hint_string = ""
+var/target_velocity_estimate/name = &"target_velocity_estimate"
+var/target_velocity_estimate/type = 9
+var/target_velocity_estimate/value = Vector3(0, 0, 0)
+var/target_velocity_estimate/hint = 0
+var/target_velocity_estimate/hint_string = ""
+var/target_distance/name = &"target_distance"
+var/target_distance/type = 3
+var/target_distance/value = 1e+20
+var/target_distance/hint = 0
+var/target_distance/hint_string = ""
+var/target_direction/name = &"target_direction"
+var/target_direction/type = 9
+var/target_direction/value = Vector3(0, 0, -1)
+var/target_direction/hint = 0
+var/target_direction/hint_string = ""
+var/suppression/name = &"suppression"
+var/suppression/type = 3
+var/suppression/value = 0.0
+var/suppression/hint = 0
+var/suppression/hint_string = ""
+var/recent_incoming_fire/name = &"recent_incoming_fire"
+var/recent_incoming_fire/type = 3
+var/recent_incoming_fire/value = 0.0
+var/recent_incoming_fire/hint = 0
+var/recent_incoming_fire/hint_string = ""
+var/recent_impact_positions/name = &"recent_impact_positions"
+var/recent_impact_positions/type = 28
+var/recent_impact_positions/value = []
+var/recent_impact_positions/hint = 0
+var/recent_impact_positions/hint_string = ""
+var/stability/name = &"stability"
+var/stability/type = 3
+var/stability/value = 1.0
+var/stability/hint = 0
+var/stability/hint_string = ""
+var/weapon_ready/name = &"weapon_ready"
+var/weapon_ready/type = 1
+var/weapon_ready/value = true
+var/weapon_ready/hint = 0
+var/weapon_ready/hint_string = ""
+var/magazine_ammo/name = &"magazine_ammo"
+var/magazine_ammo/type = 2
+var/magazine_ammo/value = 17
+var/magazine_ammo/hint = 0
+var/magazine_ammo/hint_string = ""
+var/is_reloading/name = &"is_reloading"
+var/is_reloading/type = 1
+var/is_reloading/value = false
+var/is_reloading/hint = 0
+var/is_reloading/hint_string = ""
+var/movement_speed/name = &"movement_speed"
+var/movement_speed/type = 3
+var/movement_speed/value = 0.0
+var/movement_speed/hint = 0
+var/movement_speed/hint_string = ""
+var/posture/name = &"posture"
+var/posture/type = 21
+var/posture/value = &"STANDING"
+var/posture/hint = 0
+var/posture/hint_string = ""
+var/current_action/name = &"current_action"
+var/current_action/type = 21
+var/current_action/value = &"IDLE"
+var/current_action/hint = 0
+var/current_action/hint_string = ""
+var/current_state/name = &"current_state"
+var/current_state/type = 21
+var/current_state/value = &"IDLE"
+var/current_state/hint = 0
+var/current_state/hint_string = ""
+var/movement_reason/name = &"movement_reason"
+var/movement_reason/type = 21
+var/movement_reason/value = &"NONE"
+var/movement_reason/hint = 0
+var/movement_reason/hint_string = ""
+var/movement_destination/name = &"movement_destination"
+var/movement_destination/type = 9
+var/movement_destination/value = Vector3(0, 0, 0)
+var/movement_destination/hint = 0
+var/movement_destination/hint_string = ""
+var/aim_error_degrees/name = &"aim_error_degrees"
+var/aim_error_degrees/type = 3
+var/aim_error_degrees/value = 0.0
+var/aim_error_degrees/hint = 0
+var/aim_error_degrees/hint_string = ""
+var/aim_quality/name = &"aim_quality"
+var/aim_quality/type = 3
+var/aim_quality/value = 0.0
+var/aim_quality/hint = 0
+var/aim_quality/hint_string = ""
+var/aim_settled/name = &"aim_settled"
+var/aim_settled/type = 3
+var/aim_settled/value = 0.0
+var/aim_settled/hint = 0
+var/aim_settled/hint_string = ""
+var/engagement_phase/name = &"engagement_phase"
+var/engagement_phase/type = 21
+var/engagement_phase/value = &"UNAWARE"
+var/engagement_phase/hint = 0
+var/engagement_phase/hint_string = ""
+var/has_escape_destination/name = &"has_escape_destination"
+var/has_escape_destination/type = 1
+var/has_escape_destination/value = false
+var/has_escape_destination/hint = 0
+var/has_escape_destination/hint_string = ""
+var/escape_destination/name = &"escape_destination"
+var/escape_destination/type = 9
+var/escape_destination/value = Vector3(0, 0, 0)
+var/escape_destination/hint = 0
+var/escape_destination/hint_string = ""
+var/escape_distance/name = &"escape_distance"
+var/escape_distance/type = 3
+var/escape_distance/value = 1e+20
+var/escape_distance/hint = 0
+var/escape_distance/hint_string = ""
+var/escape_route_threat/name = &"escape_route_threat"
+var/escape_route_threat/type = 3
+var/escape_route_threat/value = 0.0
+var/escape_route_threat/hint = 0
+var/escape_route_threat/hint_string = ""
+var/escape_route_threatened/name = &"escape_route_threatened"
+var/escape_route_threatened/type = 1
+var/escape_route_threatened/value = false
+var/escape_route_threatened/hint = 0
+var/escape_route_threatened/hint_string = ""
+var/escape_route_viability/name = &"escape_route_viability"
+var/escape_route_viability/type = 3
+var/escape_route_viability/value = 0.0
+var/escape_route_viability/hint = 0
+var/escape_route_viability/hint_string = ""
+var/desired_action/name = &"desired_action"
+var/desired_action/type = 21
+var/desired_action/value = &"IDLE"
+var/desired_action/hint = 0
+var/desired_action/hint_string = ""
+var/under_fire/name = &"under_fire"
+var/under_fire/type = 1
+var/under_fire/value = false
+var/under_fire/hint = 0
+var/under_fire/hint_string = ""
+
+[sub_resource type="BBVariant" id="FireValue"]
+type = 21
+saved_value = &"FIRE_TO_ESCAPE"
+resource_name = "FIRE_TO_ESCAPE"
+
+[sub_resource type="BTCheckVar" id="CheckFire"]
+variable = &"desired_action"
+value = SubResource("FireValue")
+custom_name = "Intent is FIRE_TO_ESCAPE"
+
+[sub_resource type="BTAction" id="SelectFirePosition"]
+script = ExtResource("3_select_fire")
+output_var = &"fire_move_destination"
+
+[sub_resource type="BTAction" id="MoveFirePosition"]
+script = ExtResource("2_move")
+position_var = &"fire_move_destination"
+movement_reason = &"FIRE_TO_ESCAPE"
+speed_mode = &"TACTICAL_WALK"
+
+[sub_resource type="BTSequence" id="FireMovementCycle"]
+custom_name = "Select and reach pressure position"
+children = [SubResource("SelectFirePosition"), SubResource("MoveFirePosition")]
+
+[sub_resource type="BTRepeat" id="RepeatFireMovement"]
+forever = true
+custom_name = "Keep tactical repositioning"
+children = [SubResource("FireMovementCycle")]
+
+[sub_resource type="BTAction" id="MaintainFireFacing"]
+script = ExtResource("4_face")
+
+[sub_resource type="BTAction" id="FireWhenValid"]
+script = ExtResource("5_fire")
+
+[sub_resource type="BTParallel" id="FireParallel"]
+num_successes_required = 3
+custom_name = "Move + face threat + fire opportunities"
+children = [SubResource("RepeatFireMovement"), SubResource("MaintainFireFacing"), SubResource("FireWhenValid")]
+
+[sub_resource type="BTDynamicSequence" id="FireBranch"]
+custom_name = "FIRE_TO_ESCAPE"
+children = [SubResource("CheckFire"), SubResource("FireParallel")]
+
+[sub_resource type="BBVariant" id="EscapeValue"]
+type = 21
+saved_value = &"ESCAPE"
+resource_name = "ESCAPE"
+
+[sub_resource type="BTCheckVar" id="CheckEscape"]
+variable = &"desired_action"
+value = SubResource("EscapeValue")
+custom_name = "Intent is ESCAPE"
+
+[sub_resource type="BBVariant" id="TrueValue"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="HasEscapeDestination"]
+variable = &"has_escape_destination"
+value = SubResource("TrueValue")
+custom_name = "Has escape destination"
+
+[sub_resource type="BTAction" id="MoveEscape"]
+script = ExtResource("2_move")
+position_var = &"escape_destination"
+movement_reason = &"ESCAPE"
+speed_mode = &"RUN"
+
+[sub_resource type="BTDynamicSequence" id="EscapeBranch"]
+custom_name = "ESCAPE"
+children = [SubResource("CheckEscape"), SubResource("HasEscapeDestination"), SubResource("MoveEscape")]
+
+[sub_resource type="BBVariant" id="BreakValue"]
+type = 21
+saved_value = &"BREAK_LOS"
+resource_name = "BREAK_LOS"
+
+[sub_resource type="BTCheckVar" id="CheckBreak"]
+variable = &"desired_action"
+value = SubResource("BreakValue")
+custom_name = "Intent is BREAK_LOS"
+
+[sub_resource type="BTAction" id="MoveBreakLOS"]
+script = ExtResource("2_move")
+position_var = &"selected_break_los_point"
+movement_reason = &"BREAK_LOS"
+speed_mode = &"RUN"
+finish_when_los_lost = true
+
+[sub_resource type="BTAction" id="ReevaluateAfterBreak"]
+script = ExtResource("8_reevaluate")
+
+[sub_resource type="BTDynamicSequence" id="BreakBranch"]
+custom_name = "BREAK_LOS"
+children = [SubResource("CheckBreak"), SubResource("MoveBreakLOS"), SubResource("ReevaluateAfterBreak")]
+
+[sub_resource type="BBVariant" id="SurrenderValue"]
+type = 21
+saved_value = &"SURRENDER"
+resource_name = "SURRENDER"
+
+[sub_resource type="BTCheckVar" id="CheckSurrender"]
+variable = &"desired_action"
+value = SubResource("SurrenderValue")
+custom_name = "Intent is SURRENDER"
+
+[sub_resource type="BTAction" id="StopSurrender"]
+script = ExtResource("6_stop")
+reason = &"SURRENDERED"
+
+[sub_resource type="BTAction" id="FaceOfficerSurrender"]
+script = ExtResource("4_face")
+
+[sub_resource type="BTAction" id="MaintainSurrenderPose"]
+script = ExtResource("7_pose")
+
+[sub_resource type="BTParallel" id="SurrenderParallel"]
+num_successes_required = 2
+num_failures_required = 2
+custom_name = "Face officer + maintain surrender pose"
+children = [SubResource("FaceOfficerSurrender"), SubResource("MaintainSurrenderPose")]
+
+[sub_resource type="BTDynamicSequence" id="SurrenderBranch"]
+custom_name = "SURRENDER"
+children = [SubResource("CheckSurrender"), SubResource("StopSurrender"), SubResource("SurrenderParallel")]
+
+[sub_resource type="BTAction" id="StopIdle"]
+script = ExtResource("6_stop")
+reason = &"IDLE"
+
+[sub_resource type="BTAction" id="MaintainIdlePose"]
+script = ExtResource("7_pose")
+
+[sub_resource type="BTSequence" id="IdleBranch"]
+custom_name = "IDLE"
+children = [SubResource("StopIdle"), SubResource("MaintainIdlePose")]
+
+[sub_resource type="BTDynamicSelector" id="Root"]
+custom_name = "Suspect intent execution"
+children = [SubResource("FireBranch"), SubResource("EscapeBranch"), SubResource("BreakBranch"), SubResource("SurrenderBranch"), SubResource("IdleBranch")]
+
+[resource]
+description = "Suspect orchestration: explicit interruptible intent branches with visible movement, facing, firing and completion tasks."
+blackboard_plan = SubResource("BlackboardPlan")
+root_task = SubResource("Root")

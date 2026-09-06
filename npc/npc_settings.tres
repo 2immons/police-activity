@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="NpcReactionSettings" format=3 uid="uid://b2d5g7ss1xv4u"]
+
+[ext_resource type="Script" uid="uid://demvy174x8f8s" path="res://npc/npc_settings.gd" id="1"]
+
+[resource]
+script = ExtResource("1")

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BodycamOverlaySettings" format=3 uid="uid://dr6m7haghf25b"]
+
+[ext_resource type="Script" uid="uid://b8ub5djkv2mrg" path="res://experiments/player_camera/overlay/bodycam_settings.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+lens_distortion = 0.2
+vignette_strength = 0.203
+sensor_noise = 0.004
+chromatic_aberration = 0.001
+saturation = 0.803
+motion_smear = 0.196
+rolling_shutter = 0.002

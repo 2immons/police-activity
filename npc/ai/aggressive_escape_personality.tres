@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SuspectPersonality" format=3]
+
+[ext_resource type="Script" path="res://npc/ai/suspect_personality.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+aggression = 0.78
+compliance = 0.12
+escape_drive = 0.95
+self_preservation = 0.58
+base_fear = 0.32

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PhysicalDoorSettings" format=3 uid="uid://vyqh48uddssq"]
+
+[ext_resource type="Script" uid="uid://dnbongydp7l7t" path="res://experiments/doors/door_settings.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+resistance = 1.6
+controlled_stiffness = 18.0

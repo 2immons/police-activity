@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="PackedScene" path="res://experiments/player/prefabs/glock_17.tscn" id="1"]
+[sub_resource type="SphereShape3D" id="ProbeShape"]
+radius = 0.05
+[sub_resource type="SphereShape3D" id="HandProbeShape"]
+radius = 0.085
+[node name="WeaponRig" type="Node3D"]
+[node name="Glock17" parent="." instance=ExtResource("1")]
+[node name="HolsterPose" type="Marker3D" parent="."]
+position = Vector3(-0.23, 0.85, 0.02)
+rotation = Vector3(-1.3, 3.1415927, 0)
+
+[node name="ObstructionProbe" type="ShapeCast3D" parent="."]
+shape = SubResource("ProbeShape")
+target_position = Vector3(0, 0, -0.65)
+collision_mask = 4294967295
+enabled = false
+margin = 0.005
+
+[node name="LeftHandObstructionProbe" type="ShapeCast3D" parent="."]
+shape = SubResource("HandProbeShape")
+target_position = Vector3(0, 0, -0.5)
+collision_mask = 4294967295
+enabled = false
+margin = 0.005
+
+[node name="RightHandObstructionProbe" type="ShapeCast3D" parent="."]
+shape = SubResource("HandProbeShape")
+target_position = Vector3(0, 0, -0.5)
+collision_mask = 4294967295
+enabled = false
+margin = 0.005

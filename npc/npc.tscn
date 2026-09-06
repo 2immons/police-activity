@@ -1,0 +1,539 @@
+[gd_scene format=3 uid="uid://c2sm1nb1lwly7"]
+
+[ext_resource type="Script" uid="uid://bovgo5ulfqx7h" path="res://npc/npc.gd" id="1_2xp5l"]
+[ext_resource type="PackedScene" uid="uid://cyoti8k3rjc3e" path="res://experiments/player/assets/UAL1_Standard.glb" id="2_ldo70"]
+[ext_resource type="Script" path="res://npc/npc_hit_reaction.gd" id="3_fnhme"]
+[ext_resource type="Script" path="res://npc/npc_combat_pose.gd" id="4_uamtn"]
+[ext_resource type="Script" path="res://npc/npc_hit_zone.gd" id="5_ocili"]
+[ext_resource type="BehaviorTree" path="res://ai/trees/npc.tres" id="6_fnhme"]
+[ext_resource type="PackedScene" path="res://experiments/player/prefabs/weapon_rig.tscn" id="7_weapon"]
+[ext_resource type="PackedScene" path="res://npc/ai/suspect_ai_stack.tscn" id="8_ai_stack"]
+[ext_resource type="Script" uid="uid://c32id6lcfmcb7" path="res://npc/ai/suspect_mind.gd" id="9_mind"]
+[ext_resource type="Script" path="res://npc/ai/ai_debug_draw.gd" id="10_debug"]
+
+[sub_resource type="StandardMaterial3D" id="AIDebugMaterial"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+no_depth_test = true
+
+[sub_resource type="ImmediateMesh" id="AIDebugMesh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_phifv"]
+radius = 0.15
+height = 0.3
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wuxkc"]
+radius = 0.19
+height = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_m62cl"]
+radius = 0.145
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w2fy3"]
+radius = 0.065
+height = 0.34
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qtbej"]
+radius = 0.055
+height = 0.32
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6pmqe"]
+radius = 0.105
+height = 0.48
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6d5cw"]
+radius = 0.085
+height = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xvxtv"]
+size = Vector3(0.43, 0.48, 0.25)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ad21q"]
+radius = 0.085
+height = 0.34
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4qdcl"]
+radius = 0.12
+height = 0.49
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ldo70"]
+radius = 0.42
+height = 1.75
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_uamtn"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ocutf"]
+
+[node name="NPC" type="CharacterBody3D" unique_id=1629270713 groups=["damageable_humanoid", "damageable_npc"]]
+script = ExtResource("1_2xp5l")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=113014344]
+path_desired_distance = 0.35
+target_desired_distance = 0.5
+avoidance_enabled = true
+height = 1.75
+radius = 0.42
+
+[node name="UAL1_Standard" parent="." unique_id=1794737870 instance=ExtResource("2_ldo70")]
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="GeneralSkeleton" parent="UAL1_Standard/Armature" parent_id_path=PackedInt32Array(1794737870, 33809236) index="0" unique_id=1318457460]
+bones/1/position = Vector3(0, 0.9167, -0.050100047)
+bones/1/rotation = Quaternion(2.682209e-07, 0, 0, 1)
+bones/3/rotation = Quaternion(-1.4528631e-07, 0, 0, 1)
+bones/4/rotation = Quaternion(-4.4703484e-08, 0, 0, 1)
+bones/5/rotation = Quaternion(2.2351742e-08, 0, 0, 1)
+bones/6/rotation = Quaternion(2.3841858e-07, 0, 0, 1)
+bones/7/rotation = Quaternion(0.5, 0.49999988, 0.5, -0.5000001)
+bones/8/rotation = Quaternion(1.6391276e-07, 1, 4.4703476e-08, -2.9802319e-08)
+bones/9/rotation = Quaternion(-1.1590383e-07, -0.70710695, -1.0536709e-08, 0.7071066)
+bones/10/rotation = Quaternion(-1.8751639e-07, 0.70710707, 1.07511596e-07, 0.7071065)
+bones/11/rotation = Quaternion(3.5762793e-07, -3.725291e-07, 5.960465e-08, 1)
+bones/12/rotation = Quaternion(0, -1.1920929e-07, 5.9604645e-08, 1)
+bones/13/rotation = Quaternion(0, 0, 5.9604645e-08, 1)
+bones/15/rotation = Quaternion(3.1292439e-07, -2.3841858e-07, 5.9604645e-08, 1)
+bones/16/rotation = Quaternion(-2.9802322e-08, -1.1920929e-07, 2.9802322e-08, 1)
+bones/17/rotation = Quaternion(0, -5.960466e-08, -2.980233e-08, 1)
+bones/19/rotation = Quaternion(3.4272674e-07, -2.831221e-07, 2.9802326e-08, 1)
+bones/20/rotation = Quaternion(0, -1.0430813e-07, 5.9604645e-08, 1)
+bones/23/rotation = Quaternion(2.8312203e-07, -4.4703478e-07, 5.9604638e-08, 1)
+bones/24/rotation = Quaternion(2.9802322e-08, -8.940697e-08, 8.940697e-08, 1)
+bones/25/rotation = Quaternion(0, 0, -5.9604645e-08, 1)
+bones/27/rotation = Quaternion(-0.2141867, 0.67388695, 0.21418685, 0.67388755)
+bones/28/rotation = Quaternion(-1.3411045e-07, -5.9604645e-08, -5.9604645e-08, 1)
+bones/29/rotation = Quaternion(1.4901161e-08, 7.4505806e-08, 2.9802322e-08, 1)
+bones/30/scale = Vector3(1.0001454, 1.0004876, 1.0005833)
+bones/31/rotation = Quaternion(0.5, -0.49999988, -0.5, -0.5000001)
+bones/32/rotation = Quaternion(-1.3411044e-07, 1, 7.45058e-08, 2.9802319e-08)
+bones/33/rotation = Quaternion(-1.3697726e-07, 0.707107, -1.0536716e-08, 0.70710665)
+bones/34/rotation = Quaternion(-1.8728218e-07, -0.7071071, -1.07745805e-07, 0.7071064)
+bones/35/rotation = Quaternion(3.8743025e-07, 3.8743025e-07, -8.940698e-08, 1)
+bones/36/rotation = Quaternion(-2.9802322e-08, 1.1920929e-07, -2.9802322e-08, 1)
+bones/37/rotation = Quaternion(0, -1.4901161e-08, -1.4901161e-08, 1)
+bones/38/rotation = Quaternion(4.93601e-08, 1, 1.31505296e-08, -7.2555615e-08)
+bones/39/rotation = Quaternion(4.0233135e-07, 2.2351742e-07, -5.9604645e-08, 1)
+bones/40/rotation = Quaternion(-2.9802322e-08, 1.1920929e-07, -2.9802322e-08, 1)
+bones/41/rotation = Quaternion(1.4901165e-08, 1.4901165e-08, 4.4703494e-08, 1)
+bones/43/rotation = Quaternion(3.8743025e-07, 3.2782557e-07, -8.940698e-08, 1)
+bones/44/rotation = Quaternion(-1.4901161e-08, 1.3411045e-07, -7.4505806e-08, 1)
+bones/45/rotation = Quaternion(1.4901161e-08, 1.4901161e-08, 0, 1)
+bones/46/rotation = Quaternion(-0.03375011, 0.99943036, 7.077092e-09, -1.322724e-07)
+bones/47/rotation = Quaternion(3.874302e-07, 3.2782555e-07, -8.940697e-08, 1)
+bones/48/rotation = Quaternion(-1.4901161e-08, 1.0430813e-07, -2.9802322e-08, 1)
+bones/49/rotation = Quaternion(0, 5.9604645e-08, 0, 1)
+bones/50/rotation = Quaternion(-0.018857837, 0.9998222, -1.5216909e-08, -2.369153e-07)
+bones/51/rotation = Quaternion(-0.21418679, -0.6738869, -0.21418697, 0.6738875)
+bones/52/rotation = Quaternion(1.4901163e-08, 8.940698e-08, -5.960465e-08, 1)
+bones/53/rotation = Quaternion(5.9604638e-08, -2.9802319e-08, -2.9802319e-08, 1)
+bones/54/scale = Vector3(1.0001453, 1.0004876, 1.0005833)
+bones/55/rotation = Quaternion(0, 2.115965e-06, 1, 0)
+bones/56/rotation = Quaternion(4.9513798e-09, 1, -3.8300645e-06, 6.331045e-10)
+bones/57/rotation = Quaternion(3.019401e-09, 0.70710546, -0.7071081, -3.4309913e-09)
+bones/58/rotation = Quaternion(4.4117336e-08, 1, 5.9604645e-08, 1.9473367e-08)
+bones/60/rotation = Quaternion(-6.510936e-11, 2.115965e-06, 1, -9.305792e-09)
+bones/61/rotation = Quaternion(5.2846154e-09, 1, -3.8300645e-06, 2.7046976e-10)
+bones/62/rotation = Quaternion(-3.0232599e-09, 0.70710546, -0.7071081, 3.2290552e-09)
+bones/63/rotation = Quaternion(4.4117336e-08, 1, 5.9604645e-08, 1.9473367e-08)
+
+[node name="NpcHitReaction" type="SkeletonModifier3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="1" unique_id=572482883]
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+rotation_edit_mode = 0
+rotation_order = 2
+top_level = false
+visible = true
+visibility_parent = NodePath("")
+active = true
+influence = 1.0
+script = ExtResource("3_fnhme")
+
+[node name="NpcCombatPose" type="SkeletonModifier3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="2" unique_id=1294752093]
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+rotation_edit_mode = 0
+rotation_order = 2
+top_level = false
+visible = true
+visibility_parent = NodePath("")
+active = true
+influence = 1.0
+script = ExtResource("4_uamtn")
+npc = NodePath("../../../..")
+
+[node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="3" unique_id=2132866564]
+active = false
+
+[node name="Physical Bone Hips" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=1130865420]
+transform = Transform3D(1, 0, 0, 0, 1, -5.364418e-07, 0, 5.364418e-07, 1, 0, 0.9867, -0.05010001)
+collision_layer = 0
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06999999, 0)
+body_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06999999, 0)
+mass = 7.0
+bone_name = "Hips"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone Hips" unique_id=603858381]
+shape = SubResource("CapsuleShape3D_phifv")
+
+[node name="Physical Bone Chest" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=1011517011]
+transform = Transform3D(1, 0, 0, 0, 1, -2.458692e-07, 0, 2.458692e-07, 1, 0, 1.3335999, -0.00039992775)
+collision_layer = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15999997, -5.529728e-10)
+body_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15999997, 5.529728e-10)
+mass = 9.0
+bone_name = "Chest"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone Chest" unique_id=1321532472]
+shape = SubResource("CapsuleShape3D_wuxkc")
+
+[node name="Physical Bone Head" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=465938637]
+transform = Transform3D(1, 0, 0, 0, 1, -6.7800283e-07, 0, 6.7800283e-07, 1, 0, 1.6787002, 0.0051001115)
+collision_layer = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.110000014, 0)
+body_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.110000014, 0)
+mass = 4.5
+bone_name = "Head"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone Head" unique_id=2126638373]
+shape = SubResource("SphereShape3D_m62cl")
+
+[node name="Physical Bone LeftUpperArm" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=1928608031]
+transform = Transform3D(8.940694e-08, 1, 8.9406896e-08, 4.5448544e-07, 8.940685e-08, -1, -1, 8.940698e-08, -4.5448544e-07, 0.32889992, 1.4408002, -0.065400034)
+collision_layer = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.734433e-16, -0.13699996, 2.7377952e-16)
+body_offset = Transform3D(1, -7.1054274e-15, 0, 0, 1, -4.77396e-14, 0, 1.9983913e-15, 1, 0, 0.13699996, 0)
+mass = 2.2
+bone_name = "LeftUpperArm"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone LeftUpperArm" unique_id=1606251214]
+shape = SubResource("CapsuleShape3D_w2fy3")
+
+[node name="Physical Bone LeftLowerArm" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=1767265268]
+transform = Transform3D(2.3841856e-07, 1, 8.9406896e-08, -1, 2.3841856e-07, 2.2351731e-08, 2.235171e-08, -8.94069e-08, 1, 0.6023, 1.4408002, -0.0701)
+collision_layer = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.0024895e-15, -0.13600004, -2.7009027e-28)
+body_offset = Transform3D(1, -5.884182e-14, 4.0856207e-14, -1.9983978e-15, 1, -2.1316282e-14, -3.375078e-14, 0, 1, 0, 0.13600004, 0)
+mass = 1.6
+bone_name = "LeftLowerArm"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone LeftLowerArm" unique_id=686915206]
+shape = SubResource("CapsuleShape3D_qtbej")
+
+[node name="Physical Bone RightUpperArm" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=1621901405]
+transform = Transform3D(2.9802294e-08, -1, -1.4901153e-07, -4.5448547e-07, 1.4901151e-07, -1, 1, 2.980236e-08, -4.5448547e-07, -0.32889995, 1.4408002, -0.0653999)
+collision_layer = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4156103e-07, -0.13700001, 9.125767e-17)
+body_offset = Transform3D(1, 7.1054274e-15, -2.842171e-14, 0, 1, -7.038816e-14, 0, 6.6611433e-16, 1, 1.4156103e-07, 0.13700001, 0)
+mass = 2.2
+bone_name = "RightUpperArm"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone RightUpperArm" unique_id=1832825235]
+shape = SubResource("CapsuleShape3D_w2fy3")
+
+[node name="Physical Bone RightLowerArm" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=1605929591]
+transform = Transform3D(3.576279e-07, -1, -1.4901148e-07, 1, 3.5762787e-07, 1.4156106e-07, -1.41561e-07, -1.4901154e-07, 1, -0.6022999, 1.4407978, -0.07010017)
+collision_layer = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2649765e-06, -0.136, 1.4156103e-07)
+body_offset = Transform3D(1, 4.9515927e-14, 5.684342e-14, -7.327484e-15, 1, -1.4210855e-14, 0, 0, 1, -2.2649765e-06, 0.136, -1.4156103e-07)
+mass = 1.6
+bone_name = "RightLowerArm"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone RightLowerArm" unique_id=1858080994]
+shape = SubResource("CapsuleShape3D_qtbej")
+
+[node name="Physical Bone LeftUpperLeg" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=1261849254]
+transform = Transform3D(-1, 0, 0, 0, -1, 3.695488e-06, 0, 3.695488e-06, 1, 0.089, 0.7321, 0.0014006846)
+collision_layer = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19999999, 0)
+body_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19999999, 0)
+mass = 5.2
+bone_name = "LeftUpperLeg"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone LeftUpperLeg" unique_id=1217501356]
+shape = SubResource("CapsuleShape3D_6pmqe")
+
+[node name="Physical Bone LeftLowerLeg" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=71215358]
+transform = Transform3D(1, -9.902765e-09, -1.2661711e-09, -9.9027595e-09, -1, 3.964641e-06, -1.2662104e-09, -3.964641e-06, -1, 0.08900015, 0.31780005, -0.0013993129)
+collision_layer = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4156103e-07, -0.21399999, 0)
+body_offset = Transform3D(1, -1.1971794e-15, 0, -3.09001e-16, 1, 0, 0, 0, 1, 1.4156103e-07, 0.21399999, 0)
+mass = 3.4
+bone_name = "LeftLowerLeg"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone LeftLowerLeg" unique_id=1714224901]
+shape = SubResource("CapsuleShape3D_6d5cw")
+
+[node name="Physical Bone RightUpperLeg" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=512943702]
+transform = Transform3D(-1, 1.8611583e-08, -1.302581e-10, -1.8611583e-08, -1, 3.695488e-06, -1.3018932e-10, 3.695488e-06, 1, -0.089, 0.7321, 0.0014006846)
+collision_layer = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.622262e-17, -0.19999999, 0)
+body_offset = Transform3D(1, -4.811131e-16, -1.3877788e-17, -4.8111307e-16, 1, 0, 0, 0, 1, 0, 0.19999999, 0)
+mass = 5.2
+bone_name = "RightUpperLeg"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone RightUpperLeg" unique_id=1687618054]
+shape = SubResource("CapsuleShape3D_6pmqe")
+
+[node name="Physical Bone RightLowerLeg" type="PhysicalBone3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" unique_id=662093032]
+transform = Transform3D(1, 8.042351e-09, -4.107835e-10, 8.042353e-09, -1, 3.964641e-06, -4.107516e-10, -3.964641e-06, -1, -0.08900014, 0.31780005, -0.0013993129)
+collision_layer = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4156103e-07, -0.21399999, 0)
+body_offset = Transform3D(1, -1.0360526e-15, 0, -1.4787416e-16, 1, 0, 0, 0, 1, -1.4156103e-07, 0.21399999, 0)
+mass = 3.4
+bone_name = "RightLowerLeg"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone RightLowerLeg" unique_id=153014414]
+shape = SubResource("CapsuleShape3D_6d5cw")
+
+[node name="HeadHitAttachment" type="BoneAttachment3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="4" unique_id=864797140 groups=["npc_hit_zone_attachment"]]
+transform = Transform3D(1, 0, 0, 0, 1, -6.7800283e-07, 0, 6.7800283e-07, 1, 0, 1.5687002, 0.005100037)
+bone_name = "Head"
+bone_idx = 6
+
+[node name="Head" type="StaticBody3D" parent="UAL1_Standard/Armature/GeneralSkeleton/HeadHitAttachment" unique_id=1130796916]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ocili")
+zone = "HEAD"
+reaction_bone = &"Head"
+
+[node name="Collision" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/HeadHitAttachment/Head" unique_id=1777719640]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11, 0)
+shape = SubResource("SphereShape3D_m62cl")
+
+[node name="ChestHitAttachment" type="BoneAttachment3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="5" unique_id=1514049407 groups=["npc_hit_zone_attachment"]]
+transform = Transform3D(1, 0, 0, 0, 1, -2.458692e-07, 0, 2.458692e-07, 1, 0, 1.1736, -0.00039996766)
+bone_name = "Chest"
+bone_idx = 3
+
+[node name="Chest" type="StaticBody3D" parent="UAL1_Standard/Armature/GeneralSkeleton/ChestHitAttachment" unique_id=242756557]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ocili")
+
+[node name="Collision" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/ChestHitAttachment/Chest" unique_id=741678352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0)
+shape = SubResource("BoxShape3D_xvxtv")
+
+[node name="LeftUpperArmHitAttachment" type="BoneAttachment3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="6" unique_id=1430295485 groups=["npc_hit_zone_attachment"]]
+transform = Transform3D(8.940694e-08, 1, 8.9406946e-08, 4.5448544e-07, 8.940685e-08, -1, -1, 8.9406974e-08, -4.5448544e-07, 0.19189994, 1.4408002, -0.06540005)
+bone_name = "LeftUpperArm"
+bone_idx = 8
+
+[node name="HitZone" type="StaticBody3D" parent="UAL1_Standard/Armature/GeneralSkeleton/LeftUpperArmHitAttachment" unique_id=2127947822]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ocili")
+zone = "LEFT_ARM"
+reaction_bone = &"LeftUpperArm"
+
+[node name="Collision" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/LeftUpperArmHitAttachment/HitZone" unique_id=968638067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.137, 0)
+shape = SubResource("CapsuleShape3D_ad21q")
+
+[node name="LeftLowerArmHitAttachment" type="BoneAttachment3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="7" unique_id=1335608759 groups=["npc_hit_zone_attachment"]]
+transform = Transform3D(2.3841855e-07, 1, 8.940692e-08, -0.99999994, 2.384185e-07, 2.235177e-08, 2.2351742e-08, -8.94069e-08, 0.99999994, 0.46629995, 1.4408002, -0.07009999)
+bone_name = "LeftLowerArm"
+bone_idx = 9
+
+[node name="HitZone" type="StaticBody3D" parent="UAL1_Standard/Armature/GeneralSkeleton/LeftLowerArmHitAttachment" unique_id=2075655649]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ocili")
+zone = "LEFT_ARM"
+reaction_bone = &"LeftLowerArm"
+
+[node name="Collision" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/LeftLowerArmHitAttachment/HitZone" unique_id=1766976734]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.136, 0)
+shape = SubResource("CapsuleShape3D_ad21q")
+
+[node name="RightUpperArmHitAttachment" type="BoneAttachment3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="8" unique_id=978721324 groups=["npc_hit_zone_attachment"]]
+transform = Transform3D(2.9802294e-08, -1, -1.490116e-07, -4.5448547e-07, 1.4901151e-07, -1, 1, 2.9802354e-08, -4.5448544e-07, -0.19189994, 1.4408002, -0.06540005)
+bone_name = "RightUpperArm"
+bone_idx = 32
+
+[node name="HitZone" type="StaticBody3D" parent="UAL1_Standard/Armature/GeneralSkeleton/RightUpperArmHitAttachment" unique_id=402972101]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ocili")
+zone = "RIGHT_ARM"
+reaction_bone = &"RightUpperArm"
+
+[node name="Collision" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/RightUpperArmHitAttachment/HitZone" unique_id=1765910610]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.137, 0)
+shape = SubResource("CapsuleShape3D_ad21q")
+
+[node name="RightLowerArmHitAttachment" type="BoneAttachment3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="9" unique_id=1907981056 groups=["npc_hit_zone_attachment"]]
+transform = Transform3D(3.576279e-07, -1, -1.490115e-07, 1, 3.576278e-07, 1.41561e-07, -1.41561e-07, -1.4901154e-07, 1, -0.46629995, 1.4408001, -0.07010001)
+bone_name = "RightLowerArm"
+bone_idx = 33
+
+[node name="HitZone" type="StaticBody3D" parent="UAL1_Standard/Armature/GeneralSkeleton/RightLowerArmHitAttachment" unique_id=1559199764]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ocili")
+zone = "RIGHT_ARM"
+reaction_bone = &"RightLowerArm"
+
+[node name="Collision" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/RightLowerArmHitAttachment/HitZone" unique_id=613846238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.136, 0)
+shape = SubResource("CapsuleShape3D_ad21q")
+
+[node name="LeftUpperLegHitAttachment" type="BoneAttachment3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="10" unique_id=1570661592 groups=["npc_hit_zone_attachment"]]
+transform = Transform3D(-1, 0, 0, 0, -1, 3.695488e-06, 0, 3.695488e-06, 1, 0.089, 0.9321, 0.0013999455)
+bone_name = "LeftUpperLeg"
+bone_idx = 55
+
+[node name="HitZone" type="StaticBody3D" parent="UAL1_Standard/Armature/GeneralSkeleton/LeftUpperLegHitAttachment" unique_id=13388213]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ocili")
+zone = "LEFT_LEG"
+reaction_bone = &"LeftUpperLeg"
+
+[node name="Collision" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/LeftUpperLegHitAttachment/HitZone" unique_id=675669215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("CapsuleShape3D_4qdcl")
+
+[node name="LeftLowerLegHitAttachment" type="BoneAttachment3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="11" unique_id=1722055642 groups=["npc_hit_zone_attachment"]]
+transform = Transform3D(1, -9.902764e-09, -1.2661711e-09, -9.9027595e-09, -1, 3.964641e-06, -1.2662104e-09, -3.964641e-06, -1, 0.08900001, 0.53180003, -0.0013984644)
+bone_name = "LeftLowerLeg"
+bone_idx = 56
+
+[node name="HitZone" type="StaticBody3D" parent="UAL1_Standard/Armature/GeneralSkeleton/LeftLowerLegHitAttachment" unique_id=1045472597]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ocili")
+zone = "LEFT_LEG"
+reaction_bone = &"LeftLowerLeg"
+
+[node name="Collision" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/LeftLowerLegHitAttachment/HitZone" unique_id=1456755451]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.214, 0)
+shape = SubResource("CapsuleShape3D_4qdcl")
+
+[node name="RightUpperLegHitAttachment" type="BoneAttachment3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="12" unique_id=349204128 groups=["npc_hit_zone_attachment"]]
+transform = Transform3D(-1, 1.8611583e-08, -1.3025811e-10, -1.8611583e-08, -1, 3.695488e-06, -1.3018932e-10, 3.695488e-06, 1, -0.089, 0.9321, 0.0013999455)
+bone_name = "RightUpperLeg"
+bone_idx = 60
+
+[node name="HitZone" type="StaticBody3D" parent="UAL1_Standard/Armature/GeneralSkeleton/RightUpperLegHitAttachment" unique_id=34366104]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ocili")
+zone = "RIGHT_LEG"
+reaction_bone = &"RightUpperLeg"
+
+[node name="Collision" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/RightUpperLegHitAttachment/HitZone" unique_id=1439767309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("CapsuleShape3D_4qdcl")
+
+[node name="RightLowerLegHitAttachment" type="BoneAttachment3D" parent="UAL1_Standard/Armature/GeneralSkeleton" index="13" unique_id=75989653 groups=["npc_hit_zone_attachment"]]
+transform = Transform3D(1, 8.042352e-09, -4.107835e-10, 8.042353e-09, -1, 3.964641e-06, -4.107516e-10, -3.964641e-06, -1, -0.089, 0.53180003, -0.0013984644)
+bone_name = "RightLowerLeg"
+bone_idx = 61
+
+[node name="HitZone" type="StaticBody3D" parent="UAL1_Standard/Armature/GeneralSkeleton/RightLowerLegHitAttachment" unique_id=428174461]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ocili")
+zone = "RIGHT_LEG"
+reaction_bone = &"RightLowerLeg"
+
+[node name="Collision" type="CollisionShape3D" parent="UAL1_Standard/Armature/GeneralSkeleton/RightLowerLegHitAttachment/HitZone" unique_id=899560125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.214, 0)
+shape = SubResource("CapsuleShape3D_4qdcl")
+
+[node name="BodyCollision" type="CollisionShape3D" parent="." unique_id=245858819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_ldo70")
+
+[node name="Sensors" type="Node3D" parent="." unique_id=738289031]
+
+[node name="EyeOrigin" type="Marker3D" parent="Sensors" unique_id=729687175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.62, 0)
+
+[node name="AIController" parent="." unique_id=1905369234 instance=ExtResource("8_ai_stack")]
+
+[node name="SuspectMind" type="Node" parent="." unique_id=1859496459]
+script = ExtResource("9_mind")
+
+[node name="WeaponRig" parent="." unique_id=230711413 instance=ExtResource("7_weapon")]
+
+[node name="AIDebugLabel" type="Label3D" parent="." unique_id=1948856664]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.45, 0)
+pixel_size = 0.0025
+billboard = 1
+no_depth_test = true
+text = "LIMBO SUSPECT OFF"
+
+[node name="AIDebugDraw" type="MeshInstance3D" parent="." node_paths=PackedStringArray("controller")]
+top_level = true
+material_override = SubResource("AIDebugMaterial")
+mesh = SubResource("AIDebugMesh")
+script = ExtResource("10_debug")
+controller = NodePath("../AIController")
+
+[node name="BTPlayer" type="BTPlayer" parent="." unique_id=2095619996]
+behavior_tree = ExtResource("6_fnhme")
+blackboard_plan = SubResource("BlackboardPlan_uamtn")
+
+[node name="InteractionArea" type="Area3D" parent="." unique_id=415297044]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=427964934]
+transform = Transform3D(2.985, 0, 0, 0, 2.985, 0, 0, 0, 2.985, 0, 0.8694062, 0)
+shape = SubResource("SphereShape3D_ocutf")
+
+[editable path="UAL1_Standard"]

@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://experiments/weapon_system/ballistics/penetrable_surface.gd" id="1"]
+[ext_resource type="Resource" path="res://experiments/weapon_system/ballistics/door_penetration_9mm.tres" id="2"]
+
+[sub_resource type="BoxShape3D" id="ThinShape"]
+size = Vector3(2, 2, 0.08)
+
+[sub_resource type="BoxShape3D" id="WallShape"]
+size = Vector3(2, 2, 0.2)
+
+[node name="PenetrationTestScene" type="Node3D"]
+
+[node name="DoorPanel" type="StaticBody3D" parent="."]
+
+[node name="Collision" type="CollisionShape3D" parent="DoorPanel"]
+shape = SubResource("ThinShape")
+
+[node name="BallisticSurface" type="Node" parent="DoorPanel"]
+script = ExtResource("1")
+settings = ExtResource("2")
+
+[node name="Wall" type="StaticBody3D" parent="."]
+position = Vector3(0, 0, -2)
+
+[node name="Collision" type="CollisionShape3D" parent="Wall"]
+shape = SubResource("WallShape")

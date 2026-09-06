@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BasicPlayerMovementSettings" format=3 uid="uid://cnc2xbbppjyji"]
+
+[ext_resource type="Script" uid="uid://1d6xf7t35rug" path="res://experiments/player/movement_settings.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+walk_speed = 1.2
+aim_slow_speed = 0.8
